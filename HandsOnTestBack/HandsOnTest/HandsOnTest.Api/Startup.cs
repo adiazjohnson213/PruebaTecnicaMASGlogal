@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HandsOnTest.Business.Extention;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,6 +26,20 @@ namespace HandsOnTest.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string[] origins = Configuration.GetSection("Cross:UrlOrigins").Get<IEnumerable<string>>().ToArray();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builderx => builderx.WithOrigins(origins)
+                    .AllowAnyHeader()
+                    .WithMethods("GET", "POST", "PUT", "DELETE")
+                    .AllowCredentials()
+                    );
+            });
+
+            services.AddServicesDependencies(Configuration);
+
+            services.AddHttpClient();
             services.AddControllers();
             services.AddSwaggerGen();
         }
@@ -38,21 +53,20 @@ namespace HandsOnTest.Api
             }
 
             app.UseHttpsRedirection();
+            app.UseRouting();
+            app.UseAuthorization();
+            app.UseCors("CorsPolicy");
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
 
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Hands On Test");
-            });
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
             });
         }
     }

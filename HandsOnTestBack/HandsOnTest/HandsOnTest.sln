@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandsOnTest.Business", "Han
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandsOnTest.Repository", "HandsOnTest.Repository\HandsOnTest.Repository.csproj", "{4F199E99-C324-4BA9-94CA-36D5C272FB4A}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "HandsOnTest.Database", "HandsOnTest.Database\HandsOnTest.Database.sqlproj", "{82E3FFC6-4DC7-4032-8844-28B564ACAF4B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,12 +27,6 @@ Global
 		{4F199E99-C324-4BA9-94CA-36D5C272FB4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F199E99-C324-4BA9-94CA-36D5C272FB4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F199E99-C324-4BA9-94CA-36D5C272FB4A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{82E3FFC6-4DC7-4032-8844-28B564ACAF4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{82E3FFC6-4DC7-4032-8844-28B564ACAF4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{82E3FFC6-4DC7-4032-8844-28B564ACAF4B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{82E3FFC6-4DC7-4032-8844-28B564ACAF4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{82E3FFC6-4DC7-4032-8844-28B564ACAF4B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{82E3FFC6-4DC7-4032-8844-28B564ACAF4B}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
