@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="d-flex justify-content-center mb-5">
+        <div class="card">
+          <h3>Get employees</h3>
+          <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+            <div class="row mb-2">
+              <div class="col-md-4 col-sm-12">
+                  <label>Employee id:</label>
+              </div>
+              <div class="col-md-8 col-sm-12">
+                  <input type="tel" class="form-control" formControlName="employeeId">
+              </div>
+            </div>
+            <div class="row mb-2">
+              <div class="col-md-12 col-sm-12">
+                <button type="button" class="btn btn-primary" (click)="onSubmit()">Get employee</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div *ngIf="listEmployees">
+        <div class="mb-6">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col" *ngFor="let column of columns">{{column}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let employee of listEmployees">
+                <th scope="row">{{employee.id}}</th>
+                <td>{{employee.name}}</td>
+                <td>{{employee.contractTypeName}}</td>
+                <td>{{employee.roleId}}</td>
+                <td>{{employee.roleName}}</td>
+                <td>{{employee.roleDescription}}</td>
+                <td>{{employee.hourlySalary | currency}}</td>
+                <td>{{employee.monthlySalary | currency}}</td>
+                <td>{{employee.annualSalary | currency}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
