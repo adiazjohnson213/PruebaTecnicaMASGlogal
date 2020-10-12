@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace HandsOnTest.Test
 {
@@ -56,26 +57,26 @@ namespace HandsOnTest.Test
         }
 
         [TestMethod]
-        public void GetEmployee()
+        public async Task GetEmployee()
         {
             //Arrage
             masGlobalEmployeeTestRepository.GetEmployeesAsync().Returns(employeeList);
 
             //Act
-            var resultado = employeeBusiness.GetEmployee();
+            var resultado = await employeeBusiness.GetEmployee();
 
             //Assert
             Assert.AreEqual(3, resultado.ToList().Count());
         }
 
         [TestMethod]
-        public void GetEmployeeById()
+        public async Task GetEmployeeById()
         {
             //Arrage
             masGlobalEmployeeTestRepository.GetEmployeesAsync().Returns(employeeList);
 
             //Act
-            var resultado = employeeBusiness.GetEmployee(1);
+            var resultado = await employeeBusiness.GetEmployee(1);
 
             //Assert
             Assert.AreEqual(72000000, resultado.AnnualSalary);
@@ -83,21 +84,21 @@ namespace HandsOnTest.Test
 
         [TestMethod]
         [ExpectedException(typeof(HandsOnTestException))]
-        public void GetEmployeeWithError()
+        public async Task GetEmployeeWithError()
         {
             //Act
-            employeeBusiness.GetEmployee(4);
+            await employeeBusiness.GetEmployee(4);
         }
 
         [TestMethod]
         [ExpectedException(typeof(HandsOnTestException))]
-        public void GetEmployeeByIdWithError()
+        public async Task GetEmployeeByIdWithError()
         {
             //Arrage
             masGlobalEmployeeTestRepository.GetEmployeesAsync().Returns(employeeList);
 
             //Act
-            employeeBusiness.GetEmployee(3);
+            await employeeBusiness.GetEmployee(3);
         }
     }
 }
