@@ -13,7 +13,6 @@ namespace HandsOnTest.Business.Services
         private readonly IMasGlobalEmployeeTestRepository _MasGlobalEmployeeTestRepository;
 
         private const string ContractHourlyName = "HourlySalaryEmployee";
-        private const string ContractMonthlyName = "MonthlySalaryEmployee";
 
         public EmployeeBusiness(IMasGlobalEmployeeTestRepository masGlobalEmployeeTestRepository)
         {
