@@ -37,14 +37,7 @@ namespace HandsOnTest.Api.Controllers
         [HttpGet("{id}")]
         public ActionResult<EmployeeBase> Get(int id)
         {
-            try
-            {
-                return Ok(_EmployeeBusiness.GetEmployee(id));
-            }
-            catch
-            {
-                throw;
-            }
+            return Ok(_EmployeeBusiness.GetEmployee(id));
         }
     }
 }

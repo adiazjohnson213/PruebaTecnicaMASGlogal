@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HandsOnTest.Api.Filters;
 using HandsOnTest.Business.Extention;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,7 +41,10 @@ namespace HandsOnTest.Api
             services.AddServicesDependencies(Configuration);
 
             services.AddHttpClient();
-            services.AddControllers();
+            services.AddControllers(mvcOpts =>
+            {
+                mvcOpts.Filters.Add(new ApiExceptionFilter());
+            });
             services.AddSwaggerGen();
         }
 

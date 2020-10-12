@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { map } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 import { Employee } from '../model/employee';
 import { EmpoyeesService } from '../services/empoyees.service';
 
@@ -18,7 +18,8 @@ export class EmployeesComponent implements OnInit {
 
   constructor(
       private fb: FormBuilder,
-      private employeeService: EmpoyeesService) { }
+      private employeeService: EmpoyeesService,
+      private toastr: ToastrService) { }
 
   ngOnInit() {
     this.employeeForm = this.fb.group({
@@ -31,10 +32,16 @@ export class EmployeesComponent implements OnInit {
       this.employeeService.getEmployeeById(Number(this.employeeForm.value.employeeId)).subscribe(result => {
         this.listEmployees = new Array<Employee>();
         this.listEmployees.push(result);
+      },
+      error => {
+        this.toastr.error(error.error.message, 'Employee');
       });
     } else {
       this.employeeService.getEmployees().subscribe(result => {
         this.listEmployees = result;
+      },
+      error => {
+        this.toastr.error(error.error.message, 'Employee');
       });
     }
   }

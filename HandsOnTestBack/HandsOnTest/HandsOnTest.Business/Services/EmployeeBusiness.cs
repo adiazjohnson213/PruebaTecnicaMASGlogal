@@ -1,4 +1,5 @@
 ﻿using HandsOnTest.Business.DTO;
+using HandsOnTest.Business.Exeption;
 using HandsOnTest.Repository.Entities;
 using HandsOnTest.Repository.Reposotories;
 using System;
@@ -21,25 +22,30 @@ namespace HandsOnTest.Business.Services
 
         public IEnumerable<EmployeeBase> GetEmployee()
         {
-            var employeeList = _MasGlobalEmployeeTestRepository.GetEmployeesAsync().Result.ToList();
+            var employeeList = GetEmployeesFromRepository();
             return GetAnualsSalarys(employeeList);
         }
 
         public EmployeeBase GetEmployee(int id)
         {
-            var employeeList = _MasGlobalEmployeeTestRepository.GetEmployeesAsync().Result.ToList();
+            var employeeList = GetEmployeesFromRepository();
             return GetAnualSalary(employeeList.FirstOrDefault(e => e.Id == id));
+        }
+
+        private List<Employee> GetEmployeesFromRepository()
+        {
+            return _MasGlobalEmployeeTestRepository.GetEmployeesAsync().Result.ToList();
         }
 
         private IEnumerable<EmployeeBase> GetAnualsSalarys(IEnumerable<Employee> employee)
         {
-            _ = employee ?? throw new ArgumentNullException("Employee", "Employee can not by null");
+            _ = employee ?? throw new HandsOnTestException("Employee does not have information");
             return employee.ToList().Select(e => GetAnualSalary(e));
         }
 
         private EmployeeBase GetAnualSalary(Employee employee)
         {
-            _ = employee ?? throw new ArgumentNullException("Employee", "Employee can not by null");
+            _ = employee ?? throw new HandsOnTestException("Employee does not exist");
             if (String.Compare(employee.ContractTypeName, ContractHourlyName) == 0)
             {
                 return new HourlyEmployee(employee);
