@@ -46,17 +46,7 @@ export class HttpService {
   protected doGet<T>(serviceUrl: string, opts?: Options): Observable<T> {
       const ropts = this.createOptions(opts);
 
-      return this.http.get(serviceUrl, ropts).pipe(
-          map(response => response as T)
-      );
-  }
-
-  protected doGetParameters<T>(serviceUrl: string, parametros: URLSearchParams, opts?: Options): Observable<T> {
-      const ropts = this.createOptions(opts);
-
-      return this.http.get(serviceUrl, ropts).pipe(
-          map(response => response as T)
-      );
+      return this.http.get<T>(serviceUrl, ropts);
   }
 
 }

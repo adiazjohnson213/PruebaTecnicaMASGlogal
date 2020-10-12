@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using HandsOnTest.Business.DTO;
+﻿using HandsOnTest.Business.DTO;
 using HandsOnTest.Business.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace HandsOnTest.Api.Controllers
 {
@@ -19,25 +17,16 @@ namespace HandsOnTest.Api.Controllers
             _EmployeeBusiness = employeeBusiness;
         }
 
-        // GET: api/<EmployeeController>
         [HttpGet]
-        public ActionResult<IEnumerable<EmployeeBase>> Get()
+        public async Task<ActionResult<IEnumerable<EmployeeBase>>> Get()
         {
-            try
-            {
-                return Ok(_EmployeeBusiness.GetEmployee());
-            }
-            catch
-            {
-                throw;
-            }
+            return Ok(await _EmployeeBusiness.GetEmployee());
         }
 
-        // GET api/<EmployeeController>/5
         [HttpGet("{id}")]
-        public ActionResult<EmployeeBase> Get(int id)
+        public async Task<ActionResult<EmployeeBase>> Get(int id)
         {
-            return Ok(_EmployeeBusiness.GetEmployee(id));
+            return Ok(await _EmployeeBusiness.GetEmployee(id));
         }
     }
 }

@@ -23,7 +23,7 @@ export class EmployeesComponent implements OnInit {
 
   ngOnInit() {
     this.employeeForm = this.fb.group({
-      employeeId: ['']
+      employeeId: []
     });
   }
 

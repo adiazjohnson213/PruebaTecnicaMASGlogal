@@ -1,10 +1,13 @@
 ﻿using HandsOnTest.Business.DTO;
 using HandsOnTest.Business.Exeption;
+using HandsOnTest.Business.Factories;
 using HandsOnTest.Repository.Entities;
 using HandsOnTest.Repository.Reposotories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
 
 namespace HandsOnTest.Business.Services
 {
@@ -19,40 +22,49 @@ namespace HandsOnTest.Business.Services
             _MasGlobalEmployeeTestRepository = masGlobalEmployeeTestRepository;
         }
 
-        public IEnumerable<EmployeeBase> GetEmployee()
+        public async Task<IEnumerable<EmployeeBase>> GetEmployee()
         {
-            var employeeList = GetEmployeesFromRepository();
-            return GetAnualsSalarys(employeeList);
+            try
+            {
+                var employeeList = await GetEmployeesFromRepository();
+                return GetAnualsSalarys(employeeList);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
-        public EmployeeBase GetEmployee(int id)
+        public async Task<EmployeeBase> GetEmployee(int id)
         {
-            var employeeList = GetEmployeesFromRepository();
-            return GetAnualSalary(employeeList.FirstOrDefault(e => e.Id == id));
+            try
+            {
+                var employeeList = await GetEmployeesFromRepository();
+                return GetAnualSalary(employeeList.FirstOrDefault(e => e.Id == id));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
-        private List<Employee> GetEmployeesFromRepository()
+        private Task<IEnumerable<Employee>> GetEmployeesFromRepository()
         {
-            return _MasGlobalEmployeeTestRepository.GetEmployeesAsync().Result.ToList();
+            return _MasGlobalEmployeeTestRepository.GetEmployeesAsync();
         }
 
         private IEnumerable<EmployeeBase> GetAnualsSalarys(IEnumerable<Employee> employee)
         {
             _ = employee ?? throw new HandsOnTestException("Employee does not have information");
-            return employee.ToList().Select(e => GetAnualSalary(e));
+            return employee.Select(e => GetAnualSalary(e));
         }
 
         private EmployeeBase GetAnualSalary(Employee employee)
         {
             _ = employee ?? throw new HandsOnTestException("Employee does not exist");
-            if (String.Compare(employee.ContractTypeName, ContractHourlyName) == 0)
-            {
-                return new HourlyEmployee(employee);
-            }
-            else
-            {
-                return new MonthlyEmployee(employee);
-            }
+            return EmployeeFactory.CreateEmployee(employee);
         }
     }
 }
