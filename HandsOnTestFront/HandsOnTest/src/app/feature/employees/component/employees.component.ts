@@ -34,14 +34,14 @@ export class EmployeesComponent implements OnInit {
         this.listEmployees.push(result);
       },
       error => {
-        this.toastr.error(error.error.message, 'Employee');
+        this.toastr.error(error.error.message);
       });
     } else {
       this.employeeService.getEmployees().subscribe(result => {
         this.listEmployees = result;
       },
       error => {
-        this.toastr.error(error.error.message, 'Employee');
+        this.toastr.error(error.error.message);
       });
     }
   }
