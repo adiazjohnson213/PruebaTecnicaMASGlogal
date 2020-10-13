@@ -6,7 +6,6 @@ using HandsOnTest.Repository.Reposotories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace HandsOnTest.Business.Services
@@ -14,12 +13,13 @@ namespace HandsOnTest.Business.Services
     public class EmployeeBusiness : IEmployeeBusiness
     {
         private readonly IMasGlobalEmployeeTestRepository _MasGlobalEmployeeTestRepository;
+        private readonly IEmployeeFactory _EmployeeFactory;
 
-        private const string ContractHourlyName = "HourlySalaryEmployee";
-
-        public EmployeeBusiness(IMasGlobalEmployeeTestRepository masGlobalEmployeeTestRepository)
+        public EmployeeBusiness(IMasGlobalEmployeeTestRepository masGlobalEmployeeTestRepository,
+                                IEmployeeFactory employeeFactory)
         {
             _MasGlobalEmployeeTestRepository = masGlobalEmployeeTestRepository;
+            _EmployeeFactory = employeeFactory;
         }
 
         public async Task<IEnumerable<EmployeeBase>> GetEmployee()
@@ -64,7 +64,7 @@ namespace HandsOnTest.Business.Services
         private EmployeeBase GetAnualSalary(Employee employee)
         {
             _ = employee ?? throw new HandsOnTestException("Employee does not exist");
-            return EmployeeFactory.CreateEmployee(employee);
+            return _EmployeeFactory.CreateEmployee(employee);
         }
     }
 }

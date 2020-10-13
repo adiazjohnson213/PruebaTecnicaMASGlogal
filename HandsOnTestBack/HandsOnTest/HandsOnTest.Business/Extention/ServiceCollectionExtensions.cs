@@ -1,4 +1,5 @@
-﻿using HandsOnTest.Business.Services;
+﻿using HandsOnTest.Business.Factories;
+using HandsOnTest.Business.Services;
 using HandsOnTest.Repository.Extention;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,7 @@ namespace HandsOnTest.Business.Extention
            IConfiguration configuration)
         {
             services.AddSingleton<IEmployeeBusiness, EmployeeBusiness>();
+            services.AddSingleton<IEmployeeFactory, EmployeeFactory>();
             services.AddRespositoryDependencies(configuration);
 
             return services;

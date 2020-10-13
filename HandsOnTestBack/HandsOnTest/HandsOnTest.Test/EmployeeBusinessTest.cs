@@ -1,4 +1,6 @@
+using HandsOnTest.Business.DTO;
 using HandsOnTest.Business.Exeption;
+using HandsOnTest.Business.Factories;
 using HandsOnTest.Business.Services;
 using HandsOnTest.Repository.Entities;
 using HandsOnTest.Repository.Reposotories;
@@ -14,6 +16,7 @@ namespace HandsOnTest.Test
     public class EmployeeBusinessTest
     {
         IMasGlobalEmployeeTestRepository masGlobalEmployeeTestRepository;
+        IEmployeeFactory employeeFactory;
         EmployeeBusiness employeeBusiness;
         IEnumerable<Employee> employeeList;
 
@@ -21,7 +24,8 @@ namespace HandsOnTest.Test
         public void Inicializar()
         {
             masGlobalEmployeeTestRepository = Substitute.For<IMasGlobalEmployeeTestRepository>();
-            employeeBusiness = new EmployeeBusiness(masGlobalEmployeeTestRepository);
+            employeeFactory = Substitute.For<IEmployeeFactory>();
+            employeeBusiness = new EmployeeBusiness(masGlobalEmployeeTestRepository, employeeFactory);
             employeeList = new List<Employee> {
                     new Employee {
                         Id= 1,
@@ -57,23 +61,11 @@ namespace HandsOnTest.Test
         }
 
         [TestMethod]
-        public async Task GetEmployee()
-        {
-            //Arrage
-            masGlobalEmployeeTestRepository.GetEmployeesAsync().Returns(employeeList);
-
-            //Act
-            var resultado = await employeeBusiness.GetEmployee();
-
-            //Assert
-            Assert.AreEqual(3, resultado.ToList().Count());
-        }
-
-        [TestMethod]
         public async Task GetEmployeeById()
         {
             //Arrage
             masGlobalEmployeeTestRepository.GetEmployeesAsync().Returns(employeeList);
+            employeeFactory.CreateEmployee(Arg.Any<Employee>()).Returns(new HourlyEmployee(employeeList.FirstOrDefault()));
 
             //Act
             var resultado = await employeeBusiness.GetEmployee(1);

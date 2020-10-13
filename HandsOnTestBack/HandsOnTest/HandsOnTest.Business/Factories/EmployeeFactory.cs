@@ -3,9 +3,9 @@ using HandsOnTest.Repository.Entities;
 
 namespace HandsOnTest.Business.Factories
 {
-    public static class EmployeeFactory
+    public class EmployeeFactory : IEmployeeFactory
     {
-        public static EmployeeBase CreateEmployee(Employee employee)
+        public EmployeeBase CreateEmployee(Employee employee)
         {
             switch (employee.ContractTypeName)
             {
